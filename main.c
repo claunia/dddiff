@@ -127,7 +127,6 @@ int main(int argc, char** argv)
 
         if(dif)
         {
-            lseek(fd_in, -in_read, SEEK_CUR);
             lseek(fd_out, -out_read, SEEK_CUR);
             total_written += write(fd_out, in_buf, to_process);
         }

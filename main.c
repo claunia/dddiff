@@ -144,5 +144,8 @@ int main(int argc, char** argv)
     free(in_buf);
     free(out_buf);
 
+    printf("\n");
+    printf("Written %ld of %ld bytes, only %f%%.\n", total_written, last_pos, ((float)total_written * 100.0) / (float)last_pos);
+
     return 0;
 }

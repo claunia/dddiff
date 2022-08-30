@@ -90,6 +90,11 @@ int main(int argc, char** argv)
 
     in_read = read(fd_in, in_buf, block_size);
 
+    printf("\rProcessing position %d of %ld (%f%%)",
+           0,
+           last_pos,
+           0.0);
+
     while(in_read > 0)
     {
         current_pos = lseek(fd_in, 0, SEEK_CUR);
@@ -122,6 +127,11 @@ int main(int argc, char** argv)
 
         in_read = read(fd_in, in_buf, block_size);
     }
+
+    printf("\rProcessing position %ld of %ld (%f%%)",
+           current_pos,
+           last_pos,
+           ((float)current_pos * 100.0) / (float)last_pos);
 
     close(fd_in);
     close(fd_out);

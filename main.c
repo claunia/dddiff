@@ -32,6 +32,7 @@ int main(int argc, char** argv)
     char *  in_buf, *out_buf;
     int     i, dif;
     off_t   last_pos, current_pos;
+    int progress_counter = 0;
 
     printf("dd-diff A DD that only writes changed blocks.\n");
     printf("Copyright (C) 2022 Natalia Portillo\n");
@@ -97,11 +98,17 @@ int main(int argc, char** argv)
 
     while(in_read > 0)
     {
+        progress_counter++;
         current_pos = lseek(fd_in, 0, SEEK_CUR);
-        printf("Processing position %ld of %ld (%f%%)\n",
-               current_pos,
-               last_pos,
-               ((float)current_pos * 100.0) / (float)last_pos);
+
+        if(progress_counter >= 25)
+        {
+            printf("\rProcessing position %ld of %ld (%f%%)",
+                   current_pos,
+                   last_pos,
+                   ((float)current_pos * 100.0) / (float)last_pos);
+            progress_counter = 0;
+        }
 
         out_read = read(fd_out, out_buf, block_size);
 
